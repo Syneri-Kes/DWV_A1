@@ -16,14 +16,21 @@ async function loadData() {
 
 function render(data) {
     const container = document.getElementById('filmContainer');
-    if (!container) return; 
+    if (!container) return;
     
     container.innerHTML = data.map(f => `
         <div class="film-card">
-            <h3>${f.title}</h3>
-            <p>Year: ${f.release_year}</p>
-            <p><strong>$${(f.box_office / 1e9).toFixed(2)}B</strong></p>
-            <p><small>${f.country}</small></p>
+            <div class="card-content">
+                <h3>${f.title}</h3>
+                <div class="info-group">
+                    <p class="year">Released: ${f.release_year}</p>
+                    <p class="director">Dir: ${f.director}</p>
+                    <p class="country">${f.country}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <p class="revenue">$${(f.box_office / 1e9).toFixed(2)}B</p>
+            </div>
         </div>
     `).join('');
 }
