@@ -22,7 +22,7 @@ During the data wrangling phase, the raw data extracted from Wikipedia required 
 To ensure that the revenue data remained purely numeric and valid for visualisation, the problematic entries were manually corrected in `films_data.json`. The following screenshots illustrate the difference between a standard Wikipedia link and the problematic overlink format that was fixed.
 
 ### Standard reference link
-NZ$2,215,690,000
+NZ$2,215,690,000 |
 SM$1,922,598,800
 
 ### Problematic overlink 
