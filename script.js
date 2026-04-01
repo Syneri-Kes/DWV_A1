@@ -1,40 +1,56 @@
-let films = [];
+let originalFilms = [];
+let currentFilms = [];
+let sortDirections = { release_year: 'none', box_office: 'none' };
 
-// Загрузка данных [cite: 58]
-async function loadFilms() {
-    try {
-        const response = await fetch('films_data.json');
-        films = await response.json();
-        displayFilms(films);
-    } catch (error) {
-        console.error('Error loading data:', error);
-    }
+async function loadData() {
+    const response = await fetch('films_data.json');
+    const data = await response.json();
+    originalFilms = [...data];
+    currentFilms = [...data];
+    render(currentFilms);
 }
 
-function displayFilms(data) {
+function render(data) {
     const container = document.getElementById('filmContainer');
-    container.innerHTML = data.map(film => `
+    container.innerHTML = data.map(f => `
         <div class="film-card">
-            <h3>${film.title}</h3>
-            <p><strong>Year:</strong> ${film.release_year}</p>
-            <p><strong>Director:</strong> ${film.director}</p>
-            <p class="revenue">$${film.box_office.toLocaleString()}</p>
-            <p><small>Country: ${film.country}</small></p>
+            <h3>${f.title}</h3>
+            <p>Year: ${f.release_year}</p>
+            <p><strong>$${(f.box_office / 1e9).toFixed(2)}B</strong></p>
         </div>
     `).join('');
 }
 
-// Сортировка [cite: 54, 81]
-function sortData(key) {
-    const sorted = [...films].sort((a, b) => b[key] - a[key]);
-    displayFilms(sorted);
+function toggleSort(key) {
+    const otherKey = key === 'release_year' ? 'box_office' : 'release_year';
+    sortDirections[otherKey] = 'none';
+    document.getElementById(otherKey === 'release_year' ? 'yearBtn' : 'boxBtn').innerText = 
+        (otherKey === 'release_year' ? 'Year' : 'Revenue') + " ↕";
+
+    if (sortDirections[key] === 'desc') {
+        sortDirections[key] = 'asc';
+        currentFilms.sort((a, b) => a[key] - b[key]);
+        updateBtn(key, "▲");
+    } else {
+        sortDirections[key] = 'desc';
+        currentFilms.sort((a, b) => b[key] - a[key]);
+        updateBtn(key, "▼");
+    }
+    render(currentFilms);
 }
 
-// Поиск (фильтрация)
-document.getElementById('searchInput').addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    const filtered = films.filter(f => f.title.toLowerCase().includes(term));
-    displayFilms(filtered);
-});
+function updateBtn(key, symbol) {
+    const id = key === 'release_year' ? 'yearBtn' : 'boxBtn';
+    const label = key === 'release_year' ? 'Year' : 'Revenue';
+    document.getElementById(id).innerText = `${label} ${symbol}`;
+}
 
-loadFilms();
+function resetSort() {
+    currentFilms = [...originalFilms];
+    sortDirections = { release_year: 'none', box_office: 'none' };
+    document.getElementById('yearBtn').innerText = "Year ↕";
+    document.getElementById('boxBtn').innerText = "Revenue ↕";
+    render(currentFilms);
+}
+
+loadData();
