@@ -1,0 +1,19 @@
+body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
+header { text-align: center; margin-bottom: 30px; }
+.controls { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+
+#filmContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.film-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+.film-card:hover { transform: translateY(-5px); }
+.revenue { color: #2ecc71; font-weight: bold; }
