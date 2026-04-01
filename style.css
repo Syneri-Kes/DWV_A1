@@ -26,24 +26,36 @@ body {
     border-radius: 10px;
     padding: 20px;
     display: flex;
-    flex-direction: column; 
-    justify-content: space-between; 
-    min-height: 250px; 
+    flex-direction: column;
+    min-height: 320px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border: 1px solid #eee;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .film-card h3 {
     margin: 0 0 15px 0;
     font-size: 1.1rem;
-    height: 4em;
-    overflow: hidden;
+    line-height: 1.4;
+    height: auto; 
+    min-height: 3.5em;
+}
+
+.info-group {
+    margin-top: auto;
+    padding-bottom: 10px;
 }
 
 .info-group p {
-    margin: 5px 0;
+    margin: 4px 0;
     font-size: 0.9rem;
     color: #666;
+    line-height: 1.2;
 }
 
 .card-footer {
