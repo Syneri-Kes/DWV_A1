@@ -1,19 +1,33 @@
-body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; margin: 0; padding: 20px; }
-header { text-align: center; margin-bottom: 30px; }
-.controls { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    padding: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
 
 #filmContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr); 
+    row-gap: 50px; 
+    column-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .film-card {
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
 }
-.film-card:hover { transform: translateY(-5px); }
-.revenue { color: #2ecc71; font-weight: bold; }
+
+.reset-btn { background-color: #e74c3c; color: white; border: none; cursor: pointer; padding: 8px 15px; border-radius: 5px; }
+button { padding: 8px 15px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; background: white; }
+button:hover { background: #eee; }
