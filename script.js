@@ -1,56 +1,85 @@
-let originalFilms = [];
-let currentFilms = [];
+let originalFilms = []; 
+let currentFilms = []; 
 let sortDirections = { release_year: 'none', box_office: 'none' };
 
 async function loadData() {
-    const response = await fetch('films_data.json');
-    const data = await response.json();
-    originalFilms = [...data];
-    currentFilms = [...data];
-    render(currentFilms);
+    try {
+        const response = await fetch('films_data_v2.json');
+        const data = await response.json();
+        originalFilms = JSON.parse(JSON.stringify(data)); 
+        currentFilms = [...originalFilms];
+        render(currentFilms);
+    } catch (e) {
+        console.error("Ошибка загрузки JSON:", e);
+    }
 }
 
 function render(data) {
     const container = document.getElementById('filmContainer');
+    if (!container) return; 
+    
     container.innerHTML = data.map(f => `
         <div class="film-card">
             <h3>${f.title}</h3>
             <p>Year: ${f.release_year}</p>
             <p><strong>$${(f.box_office / 1e9).toFixed(2)}B</strong></p>
+            <p><small>${f.country}</small></p>
         </div>
     `).join('');
 }
 
 function toggleSort(key) {
-    const otherKey = key === 'release_year' ? 'box_office' : 'release_year';
-    sortDirections[otherKey] = 'none';
-    document.getElementById(otherKey === 'release_year' ? 'yearBtn' : 'boxBtn').innerText = 
-        (otherKey === 'release_year' ? 'Year' : 'Revenue') + " ↕";
+    let direction = sortDirections[key] === 'desc' ? 'asc' : 'desc';
 
-    if (sortDirections[key] === 'desc') {
-        sortDirections[key] = 'asc';
-        currentFilms.sort((a, b) => a[key] - b[key]);
-        updateBtn(key, "▲");
-    } else {
-        sortDirections[key] = 'desc';
-        currentFilms.sort((a, b) => b[key] - a[key]);
-        updateBtn(key, "▼");
-    }
+    sortDirections = { release_year: 'none', box_office: 'none' };
+    sortDirections[key] = direction;
+
+    currentFilms.sort((a, b) => {
+        const valA = Number(a[key]) || 0; 
+        const valB = Number(b[key]) || 0;
+        return direction === 'desc' ? valB - valA : valA - valB;
+    });
+
+    updateUI();
     render(currentFilms);
 }
 
-function updateBtn(key, symbol) {
-    const id = key === 'release_year' ? 'yearBtn' : 'boxBtn';
-    const label = key === 'release_year' ? 'Year' : 'Revenue';
-    document.getElementById(id).innerText = `${label} ${symbol}`;
+function updateUI() {
+    const keys = ['release_year', 'box_office'];
+    keys.forEach(key => {
+        const btnId = key === 'release_year' ? 'yearBtn' : 'boxBtn';
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            const span = btn.querySelector('span');
+            if (span) {
+                const dir = sortDirections[key];
+                if (dir === 'desc') span.innerText = ' ↓';
+                else if (dir === 'asc') span.innerText = ' ↑';
+                else span.innerText = ''; 
+            }
+        }
+    });
 }
 
 function resetSort() {
     currentFilms = [...originalFilms];
     sortDirections = { release_year: 'none', box_office: 'none' };
-    document.getElementById('yearBtn').innerText = "Year ↕";
-    document.getElementById('boxBtn').innerText = "Revenue ↕";
+    
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    
+    updateUI();
     render(currentFilms);
 }
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    currentFilms = originalFilms.filter(f => 
+        f.title.toLowerCase().includes(term)
+    );
+    sortDirections = { release_year: 'none', box_office: 'none' };
+    updateUI();
+    render(currentFilms);
+});
 
 loadData();
