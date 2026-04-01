@@ -19,7 +19,7 @@ This project implements a complete data pipeline: extracting real-world data fro
 
 During the data wrangling phase, the raw data extracted from Wikipedia required significant cleaning, particularly for the `box_office` field. A unique parsing issue was encountered due to “overlinks” in the Wikipedia source—for example, values like `F8$1...` where `F8` was an internal reference link that interfered with numeric extraction.
 
-To ensure that the revenue data remained purely numeric and valid for visualisation, the problematic entries were manually corrected in `films_data.json`. The following screenshots illustrate the difference between a standard Wikipedia link and the problematic overlink format that was fixed.
+To ensure that the revenue data remained purely numeric and valid for visualisation, the problematic entries were manually corrected in `films_data.json`. The following examples illustrate the difference between a standard Wikipedia link and the problematic overlink format that was fixed.
 
 Standard reference links: 
 NZ$2,215,690,000 |
