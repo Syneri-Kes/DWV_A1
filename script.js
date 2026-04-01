@@ -4,7 +4,7 @@ let sortDirections = { release_year: 'none', box_office: 'none' };
 
 async function loadData() {
     try {
-        const response = await fetch('films_data_v2.json');
+        const response = await fetch('films_data.json');
         const data = await response.json();
         originalFilms = JSON.parse(JSON.stringify(data)); 
         currentFilms = [...originalFilms];
