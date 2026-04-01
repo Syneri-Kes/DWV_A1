@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Top Grossing Films</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Films Gallery</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Highest-Grossing Films</h1>
+        <h1>Movie Database</h1>
         <div class="controls">
-            <input type="text" id="searchInput" placeholder="Search by title...">
-            <button onclick="sortData('release_year')">Sort by Year</button>
-            <button onclick="sortData('box_office')">Sort by Revenue</button>
+            <input type="text" id="searchInput" placeholder="Search film...">
+            
+            <button id="yearBtn" onclick="toggleSort('release_year')">Year ↕</button>
+            <button id="boxBtn" onclick="toggleSort('box_office')">Revenue ↕</button>
+            <button class="reset-btn" onclick="resetSort()">Reset ✖</button>
         </div>
     </header>
 
