@@ -36,5 +36,5 @@ button span {
 }
 
 .reset-btn { background-color: #e74c3c; color: white; border: none; cursor: pointer; padding: 8px 15px; border-radius: 5px; }
-button { padding: 8px 15px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; background: pink; }
+button { padding: 8px 15px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; background: gray; }
 button:hover { background: #eee; }
